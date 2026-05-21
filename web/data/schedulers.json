@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "version": 1,
+    "schema": "exact: token -> {year, summary, good_for, notes}. Year is approximate (paper / ComfyUI integration)."
+  },
+
+  "exact": {
+    "simple": {
+      "year": 2022,
+      "summary": "Naive equally-spaced sigma schedule. The plainest scheduler — used for testing or with samplers that bring their own pacing.",
+      "good_for": "Baseline / unusual samplers; rarely the best practical choice"
+    },
+    "normal": {
+      "year": 2022,
+      "summary": "Standard scheduler matching the model's training noise schedule. Conservative default.",
+      "good_for": "Safe default when you don't know what else to pick"
+    },
+    "karras": {
+      "year": 2022,
+      "summary": "Karras EDM noise schedule (Karras et al, 'Elucidating the Design Space of Diffusion-Based Generative Models'). Most popular general-purpose schedule for SD1.5 and SDXL.",
+      "good_for": "Default workhorse for dpmpp_2m, dpmpp_2m_sde, euler, heun"
+    },
+    "exponential": {
+      "year": 2022,
+      "summary": "Exponential sigma spacing. Smoother transition between high and low noise than karras.",
+      "good_for": "Alternative to karras when results look harsh; especially good with dpmpp_2m_sde"
+    },
+    "sgm_uniform": {
+      "year": 2022,
+      "summary": "SGM-style uniform spacing in noise level. The SDXL native schedule.",
+      "good_for": "SDXL canonical pairing; required by some distilled models (Turbo, LCM)"
+    },
+    "ddim_uniform": {
+      "year": 2020,
+      "summary": "Uniform spacing in DDIM's parameterization. Pairs with the ddim sampler.",
+      "good_for": "Pair with ddim sampler; SDXL refiner workflows"
+    },
+    "beta": {
+      "year": 2024,
+      "summary": "Beta-distribution spaced schedule. Concentrates steps where the model needs them most.",
+      "good_for": "When karras/exponential look off; experimental alternative"
+    },
+    "linear_quadratic": {
+      "year": 2024,
+      "summary": "Linear-then-quadratic spacing. Used by some video diffusion models (LTX-Video).",
+      "good_for": "Video diffusion (LTX-Video and similar)"
+    },
+    "kl_optimal": {
+      "year": 2024,
+      "summary": "KL-divergence-optimal schedule. Theoretically optimal noise placement under a KL objective.",
+      "good_for": "Theoretically-motivated alternative; mostly experimental"
+    },
+    "bong_tangent": {
+      "year": 2024,
+      "summary": "RES4LYF custom schedule using a tangent-based pacing curve. Tuned for the RES4LYF RK sampler family.",
+      "good_for": "Pair with RES4LYF samplers (res_Ns, rk_*, lawson_*, etc.)"
+    }
+  },
+
+  "prefix": []
+}
