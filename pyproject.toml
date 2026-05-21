@@ -25,6 +25,20 @@ dependencies = [
 Repository = "https://github.com/laurigates/comfyui-sampler-info"
 Issues = "https://github.com/laurigates/comfyui-sampler-info/issues"
 
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+
 [tool.comfy]
 # TODO: register a Publisher at https://registry.comfy.org/ and replace
 # this with the assigned PublisherId before the first publish. See
