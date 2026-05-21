@@ -7,19 +7,27 @@ to delete from the published repo once the workflow is muscle memory.
 
 ### 1. Create the GitHub repo
 
+The scaffolding step has already done `git init`, made the initial
+commit on `feature/initial-scaffold` (branch-protection hook blocks
+commits straight to `main`), and set `origin` to point at
+`https://github.com/laurigates/comfyui-sampler-info.git`.
+
+Two steps to publish:
+
 ```sh
 cd /mnt/sabrent/ComfyUI/custom_nodes/comfyui-sampler-info
+
+# Rename the feature branch to main (no actual main commit exists, so
+# nothing is lost). This is a metadata-only operation.
+git branch -M feature/initial-scaffold main
+
+# Create the GitHub repo and push.
 gh repo create laurigates/comfyui-sampler-info \
     --public \
     --source . \
     --description "Rich metadata + fuzzy-search picker for ComfyUI sampler/scheduler dropdowns" \
-    --remote origin \
     --push
 ```
-
-(Local `git init` + initial commit + `origin` remote pointing at this
-URL are already done by the scaffolding step. `gh repo create` with
-`--source .` reuses them and pushes.)
 
 ### 2. Register a Comfy Registry publisher
 
