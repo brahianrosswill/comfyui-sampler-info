@@ -1,3 +1,10 @@
+---
+paths:
+  - "web/js/**/*.js"
+  - "web/data/**/*.json"
+  - "__init__.py"
+---
+
 # Development Workflow
 
 ## Project Context

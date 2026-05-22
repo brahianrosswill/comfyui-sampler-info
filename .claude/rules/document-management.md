@@ -6,9 +6,10 @@ Blueprint manages three document types for this project. Watch for opportunities
 
 | Type | Location | Use When |
 |------|----------|----------|
-| PRD | `docs/prds/` | Describing what to build and why — features, requirements, user stories |
-| ADR | `docs/adrs/` | Recording significant architecture or design decisions with trade-off analysis |
+| PRD | `docs/blueprint/prds/` | Describing what to build and why — features, requirements, user stories |
+| ADR | `docs/blueprint/adrs/` | Recording significant architecture or design decisions with trade-off analysis |
 | PRP | `docs/prps/` | Creating implementation-ready task packages for a specific change |
+| TRP | `docs/trps/` | Test regression plans derived from git history |
 
 ## Automatic Decision Detection
 
@@ -33,15 +34,16 @@ Watch for these signals during conversations and prompt to capture them:
 
 When a conversation contains a documentable decision, suggest:
 
-> "This looks like an architecture decision worth capturing. Would you like me to create an ADR at `docs/adrs/NNNN-<slug>.md`?"
+> "This looks like an architecture decision worth capturing. Would you like me to create an ADR at `docs/blueprint/adrs/NNNN-<slug>.md`?"
 
 Use `/blueprint:derive-adr`, `/blueprint:derive-prd`, or `/blueprint:prp-create` to generate documents from the conversation.
 
 ## Naming Conventions
 
-- ADRs: `docs/adrs/NNNN-kebab-case-title.md` (e.g., `0001-frontend-only-architecture.md`)
-- PRDs: `docs/prds/kebab-case-title.md`
+- ADRs: `docs/blueprint/adrs/NNNN-kebab-case-title.md` (e.g., `0001-frontend-only-architecture.md`)
+- PRDs: `docs/blueprint/prds/kebab-case-title.md`
 - PRPs: `docs/prps/kebab-case-title.md`
+- TRPs: `docs/trps/NNN-kebab-case-title.md`
 
 ## What Already Exists
 

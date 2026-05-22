@@ -1,3 +1,8 @@
+---
+paths:
+  - "web/js/**/*.js"
+---
+
 # Error Handling
 
 Patterns for graceful degradation in the ComfyUI frontend context — where failures must not crash the host application.

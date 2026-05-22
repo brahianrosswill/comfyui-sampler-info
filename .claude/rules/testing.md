@@ -1,3 +1,10 @@
+---
+paths:
+  - "tests/**"
+  - "web/js/**/*.js"
+  - ".pre-commit-config.yaml"
+---
+
 # Testing Requirements
 
 ## Syntax Validation
