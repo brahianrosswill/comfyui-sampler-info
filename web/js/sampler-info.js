@@ -128,6 +128,7 @@ const CSS = `
     background: rgba(0, 0, 0, 0.55);
     z-index: 9998;
     backdrop-filter: blur(2px);
+    touch-action: manipulation;
 }
 #${DIALOG_ID} {
     position: fixed;
@@ -137,6 +138,7 @@ const CSS = `
     z-index: 9999;
     width: min(720px, calc(100vw - 32px));
     max-height: min(80vh, 720px);
+    touch-action: manipulation;
     display: flex;
     flex-direction: column;
     background: #1a1a1f;
@@ -726,7 +728,12 @@ function openPicker(widget, node) {
 
     const backdrop = document.createElement("div");
     backdrop.id = `${DIALOG_ID}-backdrop`;
-    backdrop.addEventListener("click", dismissPicker);
+    // Use pointerdown, not click — on touch the synthetic click that follows
+    // the opening tap (touchend → ~300ms → click) lands on the just-mounted
+    // full-viewport backdrop and would immediately re-close the picker.
+    // Pointerdown isn't synthesized post-touchend, so it stays inert until
+    // the user actually taps outside again.
+    backdrop.addEventListener("pointerdown", dismissPicker);
 
     const dialog = document.createElement("div");
     dialog.id = DIALOG_ID;
