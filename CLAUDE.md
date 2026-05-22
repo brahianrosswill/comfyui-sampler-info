@@ -4,6 +4,25 @@ Frontend-only ComfyUI custom-node pack. No Python nodes — `__init__.py`
 just exports an empty `NODE_CLASS_MAPPINGS` and `WEB_DIRECTORY = "./web"`
 so ComfyUI's loader picks up the JS extension.
 
+## Documentation & Design Records
+
+**Full PRD**: See [`docs/blueprint/prds/project-overview.md`](docs/blueprint/prds/project-overview.md) for comprehensive requirements.
+
+**Architecture Decisions** (all Accepted):
+
+| ID | Title | Domain |
+|----|----|--------|
+| [ADR-0001](docs/blueprint/adrs/0001-project-language.md) | Project Language — Python Stub + Vanilla JavaScript | build-tooling |
+| [ADR-0002](docs/blueprint/adrs/0002-frontend-only-plugin-architecture.md) | Frontend-Only Plugin Architecture | frontend-framework |
+| [ADR-0003](docs/blueprint/adrs/0003-single-file-js-implementation.md) | Single-File JavaScript (No Bundler) | build-tooling |
+| [ADR-0004](docs/blueprint/adrs/0004-static-json-corpus.md) | Static JSON Corpus Format | data-layer |
+| [ADR-0005](docs/blueprint/adrs/0005-package-management-and-distribution.md) | Package Management via pyproject.toml | deployment |
+| [ADR-0006](docs/blueprint/adrs/0006-ci-cd-github-actions.md) | CI/CD via GitHub Actions | deployment |
+| [ADR-0007](docs/blueprint/adrs/0007-testing-strategy.md) | Testing Strategy (Syntax + Browser Smoke) | testing |
+| [ADR-0008](docs/blueprint/adrs/0008-widget-name-detection.md) | Widget Detection by Name | api-design |
+
+**Test Coverage**: [`docs/trps/regression-gaps-initial-scaffold.md`](docs/trps/regression-gaps-initial-scaffold.md) tracks coverage gaps from initial release (v0.1.0 at 100% feature completion).
+
 ## What it does
 
 Two additive enhancements on combo widgets named `sampler_name` /

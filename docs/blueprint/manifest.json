@@ -159,10 +159,13 @@
     "claude-md": {
       "enabled": true,
       "auto_run": false,
-      "last_completed_at": null,
-      "last_result": null,
+      "last_completed_at": "2026-05-22T00:00:00Z",
+      "last_result": "success",
       "schedule": "on-change",
-      "stats": {},
+      "stats": {
+        "runs_total": 1,
+        "items_processed": 1
+      },
       "context": {}
     },
     "curate-docs": {
@@ -197,7 +200,9 @@
       "PRD-001": {
         "path": "docs/blueprint/prds/project-overview.md",
         "title": "comfyui-sampler-info — Product Requirements Document",
-        "github_issues": [],
+        "github_issues": [
+          6
+        ],
         "created": "2026-05-21"
       },
       "ADR-0001": {
@@ -208,7 +213,9 @@
         "relates_to": [
           "PRD-001"
         ],
-        "github_issues": [],
+        "github_issues": [
+          7
+        ],
         "created": "2026-05-21"
       },
       "ADR-0002": {
@@ -220,7 +227,9 @@
           "PRD-001",
           "ADR-0001"
         ],
-        "github_issues": [],
+        "github_issues": [
+          8
+        ],
         "created": "2026-05-21"
       },
       "ADR-0003": {
@@ -233,7 +242,9 @@
           "ADR-0001",
           "ADR-0002"
         ],
-        "github_issues": [],
+        "github_issues": [
+          9
+        ],
         "created": "2026-05-21"
       },
       "ADR-0004": {
@@ -246,7 +257,9 @@
           "ADR-0001",
           "ADR-0002"
         ],
-        "github_issues": [],
+        "github_issues": [
+          10
+        ],
         "created": "2026-05-21"
       },
       "ADR-0005": {
@@ -258,7 +271,9 @@
           "PRD-001",
           "ADR-0001"
         ],
-        "github_issues": [],
+        "github_issues": [
+          11
+        ],
         "created": "2026-05-21"
       },
       "ADR-0006": {
@@ -270,7 +285,9 @@
           "PRD-001",
           "ADR-0005"
         ],
-        "github_issues": [],
+        "github_issues": [
+          12
+        ],
         "created": "2026-05-21"
       },
       "ADR-0007": {
@@ -283,7 +300,9 @@
           "ADR-0001",
           "ADR-0003"
         ],
-        "github_issues": [],
+        "github_issues": [
+          13
+        ],
         "created": "2026-05-21"
       },
       "ADR-0008": {
@@ -295,7 +314,9 @@
           "PRD-001",
           "ADR-0002"
         ],
-        "github_issues": [],
+        "github_issues": [
+          14
+        ],
         "created": "2026-05-21"
       },
       "TRP-001": {
@@ -306,10 +327,24 @@
         "relates_to": [
           "PRD-001",
           "ADR-0007"
+        ],
+        "github_issues": [
+          15
         ]
       }
     },
-    "github_issues": {},
+    "github_issues": {
+      "6": "PRD-001",
+      "7": "ADR-0001",
+      "8": "ADR-0002",
+      "9": "ADR-0003",
+      "10": "ADR-0004",
+      "11": "ADR-0005",
+      "12": "ADR-0006",
+      "13": "ADR-0007",
+      "14": "ADR-0008",
+      "15": "TRP-001"
+    },
     "last_trp": 1
   },
   "generated_artifacts": [
