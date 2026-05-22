@@ -1,7 +1,7 @@
 {
   "format_version": "3.3.0",
   "created_at": "2026-05-21T00:00:00.000Z",
-  "updated_at": "2026-05-21T18:30:00Z",
+  "updated_at": "2026-05-22T00:00:00Z",
   "created_by": {
     "blueprint_plugin": "3.3.0"
   },
@@ -128,16 +128,18 @@
     "feature-tracker-sync": {
       "enabled": true,
       "auto_run": false,
-      "last_completed_at": "2026-05-21T20:00:00Z",
+      "last_completed_at": "2026-05-22T00:00:00Z",
       "last_result": "success",
       "schedule": "daily",
       "stats": {
-        "runs_total": 1,
+        "runs_total": 2,
         "items_processed": 14
       },
       "context": {
         "features_synced": 14,
-        "work_orders_created": 13,
+        "features_complete": 14,
+        "work_orders_completed": 10,
+        "work_orders_pending": 3,
         "prd_documents": 1
       }
     },

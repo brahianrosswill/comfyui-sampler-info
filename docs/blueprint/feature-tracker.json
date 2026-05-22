@@ -3,24 +3,24 @@
   "project": "comfyui-sampler-info",
   "description": "Frontend-only ComfyUI plugin for sampler/scheduler enrichment and discovery",
   "created_at": "2026-05-21",
-  "last_updated": "2026-05-21",
-  "current_phase": "v0.1.0-initial-release",
-  "prd_status": "Draft",
+  "last_updated": "2026-05-22",
+  "current_phase": "v0.1.x-corpus-patches",
+  "prd_status": "Active",
   "statistics": {
     "total_features": 14,
-    "complete": 0,
+    "complete": 14,
     "partial": 0,
     "in_progress": 0,
-    "not_started": 14,
+    "not_started": 0,
     "blocked": 0,
-    "completion_percentage": 0.0
+    "completion_percentage": 100.0
   },
   "phases": [
     {
       "id": "v0.1.0-initial-release",
       "name": "v0.1.0 — Initial Release",
       "description": "Core tooltip + picker, sampler/scheduler corpus",
-      "status": "not_started",
+      "status": "complete",
       "priority": "P0",
       "target_date": null,
       "features": [
@@ -39,7 +39,7 @@
       "id": "v0.1.0-polish",
       "name": "v0.1.0 — Polish & Mobile (P1)",
       "description": "Mobile UX, advanced coverage, fallback handling",
-      "status": "not_started",
+      "status": "complete",
       "priority": "P1",
       "target_date": null,
       "features": [
@@ -54,7 +54,7 @@
       "id": "v0.1.x-corpus-patches",
       "name": "v0.1.x — Corpus Patches",
       "description": "Community corpus additions (RES4LYF token-specific data, custom-pack samplers)",
-      "status": "not_started",
+      "status": "in_progress",
       "priority": "P2",
       "target_date": null,
       "features": []
@@ -84,7 +84,7 @@
       "title": "Hover tooltips",
       "description": "Set `widget.options.tooltip` from corpus on combo widgets named `sampler_name`, `sampler`, `scheduler`. Surfaced by LiteGraph native hover (desktop) and comfyui-touch-tooltips (mobile).",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["ADR-0002", "ADR-0008"],
       "phase": "v0.1.0-initial-release",
@@ -97,16 +97,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-001"]
     },
     {
       "id": "FR-002",
       "title": "Fuzzy-search picker modal",
       "description": "Intercept widget click; open a centered HTML `<dialog>` with search input, per-row badges (order, type, year, family), summary, good_for, pairs_with.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["ADR-0002", "ADR-0008"],
       "phase": "v0.1.0-initial-release",
@@ -120,16 +120,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-002"]
     },
     {
       "id": "FR-003",
       "title": "fzf-style scoring",
       "description": "Subsequence matching with word-boundary bonuses for underscore-separated tokens. AND-token support (space-separated). Matched characters highlighted.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-002"],
       "phase": "v0.1.0-initial-release",
@@ -142,16 +142,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-002"]
     },
     {
       "id": "FR-004",
       "title": "Keyboard navigation",
       "description": "↑/↓ navigate rows, Enter selects, Esc closes, PgUp/PgDn jump 8 rows, type-from-anywhere always filters.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-002"],
       "phase": "v0.1.0-initial-release",
@@ -165,16 +165,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-002"]
     },
     {
       "id": "FR-005",
       "title": "Corpus — sampler metadata",
       "description": "`web/data/samplers.json`: exact token entries + prefix regex families. Fields: year, family, order, type, summary, good_for, pairs_with, supersedes_by, notes.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["ADR-0004"],
       "phase": "v0.1.0-initial-release",
@@ -186,17 +186,17 @@
       ],
       "implementation": {
         "files": ["web/data/samplers.json"],
-        "tests": [],
-        "commits": []
+        "tests": ["tests/test_corpus.py"],
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-003"]
     },
     {
       "id": "FR-006",
       "title": "Corpus — scheduler metadata",
       "description": "`web/data/schedulers.json`: same schema as samplers corpus.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["ADR-0004"],
       "phase": "v0.1.0-initial-release",
@@ -208,17 +208,17 @@
       ],
       "implementation": {
         "files": ["web/data/schedulers.json"],
-        "tests": [],
-        "commits": []
+        "tests": ["tests/test_corpus.py"],
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-004"]
     },
     {
       "id": "FR-007",
       "title": "Additive / non-clobbering",
       "description": "Never overwrite an existing tooltip when corpus lookup returns null. Picker rows render bare names for uncovered tokens.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-001"],
       "phase": "v0.1.0-initial-release",
@@ -230,16 +230,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-001"]
     },
     {
       "id": "FR-008",
       "title": "Widget-name-based detection",
       "description": "Enhancement applied by widget name (`sampler_name`, `sampler`, `scheduler`), not by node type — covers all compatible nodes automatically.",
       "priority": "P0",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["ADR-0008"],
       "phase": "v0.1.0-initial-release",
@@ -252,38 +252,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
-    },
-    {
-      "id": "FR-014",
-      "title": "Static asset serving",
-      "description": "Pack served as a ComfyUI frontend extension via `WEB_DIRECTORY = \"./web\"`. No Python nodes. JSON data files fetched at runtime via `/extensions/comfyui-sampler-info/data/`.",
-      "priority": "P0",
-      "status": "not_started",
-      "source": "PRD-001",
-      "related_to": ["ADR-0002", "ADR-0005"],
-      "phase": "v0.1.0-initial-release",
-      "acceptance_criteria": [
-        "WEB_DIRECTORY configured in __init__.py",
-        "JSON files served at correct URL path",
-        "Runtime fetches work correctly",
-        "No Python nodes included"
-      ],
-      "implementation": {
-        "files": ["__init__.py", "web/js/sampler-info.js", "web/data/samplers.json", "web/data/schedulers.json"],
-        "tests": [],
-        "commits": []
-      },
-      "implementing_wos": []
+      "implementing_wos": ["WO-001"]
     },
     {
       "id": "FR-009",
       "title": "Mobile-friendly picker",
       "description": "16px minimum input font (no iOS auto-zoom), 36px minimum touch targets, momentum scrolling, works on zoomed/panned canvas.",
       "priority": "P1",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-002", "ADR-0002"],
       "phase": "v0.1.0-polish",
@@ -297,16 +275,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-006"]
     },
     {
       "id": "FR-010",
       "title": "Prefix regex family coverage",
       "description": "Pattern-based matching to cover RES4LYF's ~110 token variants at family level without 1:1 enumeration. First-match wins; more-specific patterns listed first.",
       "priority": "P1",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-005", "FR-006"],
       "phase": "v0.1.0-polish",
@@ -318,17 +296,17 @@
       ],
       "implementation": {
         "files": ["web/data/samplers.json", "web/js/sampler-info.js"],
-        "tests": [],
-        "commits": []
+        "tests": ["tests/test_corpus.py"],
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-007"]
     },
     {
       "id": "FR-011",
       "title": "Arrow-button cycling preserved",
       "description": "Native `<` / `>` buttons on the combo widget retain their original increment/decrement behavior; only the center-click is intercepted.",
       "priority": "P1",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-002", "ADR-0008"],
       "phase": "v0.1.0-polish",
@@ -341,16 +319,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-006", "WO-008"]
     },
     {
       "id": "FR-012",
       "title": "Long-press mobile tooltip",
       "description": "When `comfyui-touch-tooltips` companion pack is installed, the same tooltip text surfaces on long-press for mobile users.",
       "priority": "P1",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-001"],
       "phase": "v0.1.0-polish",
@@ -363,16 +341,16 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-009"]
     },
     {
       "id": "FR-013",
       "title": "Graceful picker fallback",
       "description": "If `widget.onPointerDown` hook is no longer called by the frontend, picker silently stops opening and falls back to native dropdown. Tooltip enrichment (FR-001) continues to work.",
       "priority": "P1",
-      "status": "not_started",
+      "status": "complete",
       "source": "PRD-001",
       "related_to": ["FR-001", "FR-002"],
       "phase": "v0.1.0-polish",
@@ -385,94 +363,36 @@
       "implementation": {
         "files": ["web/js/sampler-info.js"],
         "tests": [],
-        "commits": []
+        "commits": ["60a3d1c"]
       },
-      "implementing_wos": []
+      "implementing_wos": ["WO-010"]
+    },
+    {
+      "id": "FR-014",
+      "title": "Static asset serving",
+      "description": "Pack served as a ComfyUI frontend extension via `WEB_DIRECTORY = \"./web\"`. No Python nodes. JSON data files fetched at runtime via `/extensions/comfyui-sampler-info/data/`.",
+      "priority": "P0",
+      "status": "complete",
+      "source": "PRD-001",
+      "related_to": ["ADR-0002", "ADR-0005"],
+      "phase": "v0.1.0-initial-release",
+      "acceptance_criteria": [
+        "WEB_DIRECTORY configured in __init__.py",
+        "JSON files served at correct URL path",
+        "Runtime fetches work correctly",
+        "No Python nodes included"
+      ],
+      "implementation": {
+        "files": ["__init__.py", "web/js/sampler-info.js", "web/data/samplers.json", "web/data/schedulers.json"],
+        "tests": ["tests/test_init.py"],
+        "commits": ["60a3d1c"]
+      },
+      "implementing_wos": ["WO-005"]
     }
   ],
   "tasks": {
     "in_progress": [],
     "pending": [
-      {
-        "id": "WO-001",
-        "description": "Implement hover tooltip enrichment for sampler_name/sampler/scheduler widgets",
-        "related_features": ["FR-001", "FR-007", "FR-008"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P0"
-      },
-      {
-        "id": "WO-002",
-        "description": "Build fuzzy-search picker modal with keyboard navigation",
-        "related_features": ["FR-002", "FR-003", "FR-004"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P0"
-      },
-      {
-        "id": "WO-003",
-        "description": "Create sampler metadata corpus (samplers.json with 48+ tokens)",
-        "related_features": ["FR-005", "FR-010"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P0"
-      },
-      {
-        "id": "WO-004",
-        "description": "Create scheduler metadata corpus (schedulers.json with 10+ tokens)",
-        "related_features": ["FR-006"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P0"
-      },
-      {
-        "id": "WO-005",
-        "description": "Configure WEB_DIRECTORY and asset serving for ComfyUI extension",
-        "related_features": ["FR-014"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P0"
-      },
-      {
-        "id": "WO-006",
-        "description": "Implement mobile-friendly picker UI (36px targets, 16px input, momentum scroll)",
-        "related_features": ["FR-009", "FR-011"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P1"
-      },
-      {
-        "id": "WO-007",
-        "description": "Add RES4LYF prefix regex family patterns to samplers corpus",
-        "related_features": ["FR-010"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P1"
-      },
-      {
-        "id": "WO-008",
-        "description": "Implement arrow button cycling preservation",
-        "related_features": ["FR-011"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P1"
-      },
-      {
-        "id": "WO-009",
-        "description": "Add long-press tooltip support for comfyui-touch-tooltips integration",
-        "related_features": ["FR-012"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P1"
-      },
-      {
-        "id": "WO-010",
-        "description": "Implement graceful fallback for hook compatibility",
-        "related_features": ["FR-013"],
-        "source": "PRD-001",
-        "added": "2026-05-21",
-        "priority": "P1"
-      },
       {
         "id": "WO-011",
         "description": "Register with Comfy Registry (PublisherId setup in pyproject.toml)",
@@ -498,6 +418,107 @@
         "priority": "P1"
       }
     ],
-    "completed": []
+    "completed": [
+      {
+        "id": "WO-001",
+        "description": "Implement hover tooltip enrichment for sampler_name/sampler/scheduler widgets",
+        "related_features": ["FR-001", "FR-007", "FR-008"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P0"
+      },
+      {
+        "id": "WO-002",
+        "description": "Build fuzzy-search picker modal with keyboard navigation",
+        "related_features": ["FR-002", "FR-003", "FR-004"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P0"
+      },
+      {
+        "id": "WO-003",
+        "description": "Create sampler metadata corpus (samplers.json with 48+ tokens)",
+        "related_features": ["FR-005", "FR-010"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P0"
+      },
+      {
+        "id": "WO-004",
+        "description": "Create scheduler metadata corpus (schedulers.json with 10+ tokens)",
+        "related_features": ["FR-006"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P0"
+      },
+      {
+        "id": "WO-005",
+        "description": "Configure WEB_DIRECTORY and asset serving for ComfyUI extension",
+        "related_features": ["FR-014"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P0"
+      },
+      {
+        "id": "WO-006",
+        "description": "Implement mobile-friendly picker UI (36px targets, 16px input, momentum scroll)",
+        "related_features": ["FR-009", "FR-011"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P1"
+      },
+      {
+        "id": "WO-007",
+        "description": "Add RES4LYF prefix regex family patterns to samplers corpus",
+        "related_features": ["FR-010"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P1"
+      },
+      {
+        "id": "WO-008",
+        "description": "Implement arrow button cycling preservation",
+        "related_features": ["FR-011"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P1"
+      },
+      {
+        "id": "WO-009",
+        "description": "Add long-press tooltip support for comfyui-touch-tooltips integration",
+        "related_features": ["FR-012"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P1"
+      },
+      {
+        "id": "WO-010",
+        "description": "Implement graceful fallback for hook compatibility",
+        "related_features": ["FR-013"],
+        "source": "PRD-001",
+        "added": "2026-05-21",
+        "completed_at": "2026-05-21",
+        "commit": "60a3d1c",
+        "priority": "P1"
+      }
+    ]
   }
 }
