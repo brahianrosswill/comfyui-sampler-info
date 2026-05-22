@@ -91,6 +91,31 @@ w.onPointerDown = function (pointer, ownerNode, canvas) {
 ```
 
 
+## Touch-Friendly Modal Dismiss
+
+When opening a full-viewport overlay from a touch-originated `onPointerDown`, wire backdrop dismiss to **`pointerdown`**, not `click`. The synthesized `click` event that follows `touchend` (~300 ms later on iOS Safari) lands on the topmost element under the original tap coordinates — which is the just-mounted backdrop — and would immediately re-close the overlay.
+
+```js
+// Do — pointerdown is not re-synthesized after touchend
+backdrop.addEventListener("pointerdown", dismissPicker);
+
+// Don't — synthesized click after the opening tap dismisses immediately
+backdrop.addEventListener("click", dismissPicker);   // BUG on touch
+```
+
+Desktop is unaffected because real mouse `click` doesn't fire across mismatched `mousedown`/`mouseup` targets (the canvas mousedown, the backdrop mouseup → no click on either).
+
+Also set `touch-action: manipulation` on backdrop and dialog to suppress iOS double-tap zoom inside the modal:
+
+```css
+#dialog-backdrop, #dialog {
+    touch-action: manipulation;
+}
+```
+
+**Source**: commit `4249353` (2026-05-22) — `fix(picker): use pointerdown not click for backdrop dismiss`.
+
+
 ## Corpus Data Fetch
 
 Static JSON is fetched via the known extension URL path, not bundled into the JS:
