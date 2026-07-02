@@ -24,6 +24,7 @@ authored in TypeScript (`src/index.ts`) and compiled to browser ESM via
 | [ADR-0008](docs/blueprint/adrs/0008-widget-name-detection.md) | Widget Detection by Name | api-design |
 | [ADR-0009](docs/blueprint/adrs/0009-adopt-vitest.md) | Vitest as Dev-Only Test Harness | testing |
 | [ADR-0010](docs/blueprint/adrs/0010-adopt-typescript-bun-build.md) | Adopt TypeScript + bun build (supersedes ADR-0001, ADR-0003) | build-tooling |
+| [ADR-0011](docs/blueprint/adrs/0011-adopt-comfy-modal-kit-field-provider.md) | Adopt comfy-modal-kit field-provider registry + click coordination | api-design |
 
 **Test Coverage**: [`docs/trps/regression-gaps-initial-scaffold.md`](docs/trps/regression-gaps-initial-scaffold.md) tracks coverage gaps from initial release (v0.1.0 at 100% feature completion).
 
@@ -50,7 +51,7 @@ Two additive enhancements on combo widgets named `sampler_name` /
 | `__init__.py` | Loader stub. `WEB_DIRECTORY = "./web/dist"`, empty mappings. |
 | `src/index.ts` | The whole extension — TypeScript source (port of the former single-file JS). Compiled to `web/dist/index.js`. |
 | `src/comfyui-shims.d.ts` | Types the `/scripts/app.js` runtime import (see ADR-0010 type-seam notes). |
-| `web/dist/` | **Generated** — `bun build` output (`index.js` + copied `data/`). Git-ignored; force-shipped to the registry via `[tool.comfy] includes`. Do not edit by hand. |
+| `web/dist/` | **Generated** — `bun build` output (`index.js` + copied `data/`). Git-tracked (committed so the served artifact is present without a build step, e.g. the frontend↔registry sync gate); shipped to the registry via `[tool.comfy] includes`. Rebuild with `bun run build`; do not edit by hand. |
 | `web/data/samplers.json` | Sampler corpus — exact tokens + prefix regex families. Copied into `web/dist/data/` at build. |
 | `web/data/schedulers.json` | Scheduler corpus — same schema. |
 | `tsconfig.json` | TypeScript config — strict, `tsc --noEmit` type gate. |
@@ -199,9 +200,10 @@ bun run typecheck            # tsc --noEmit type gate
 just build                   # same as `bun run build`
 ```
 
-The served file is `web/dist/index.js` — `web/dist/` is git-ignored and
-generated. Build before testing live behavior or running the screenshot
-pipeline.
+The served file is `web/dist/index.js` — `web/dist/` is generated but
+git-tracked (the built artifact is committed). Rebuild it after editing
+`src/index.ts` and commit the result before testing live behavior or running
+the screenshot pipeline.
 
 ### Lint & format
 
