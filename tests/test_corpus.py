@@ -12,6 +12,32 @@ import pytest
 CORPUS_DIR = Path(__file__).resolve().parent.parent / "web" / "data"
 CORPUS_FILES = ["samplers.json", "schedulers.json"]
 
+# Mirrors ALLOWED_SOURCE_KINDS in scripts/corpus_check.py. `source` records how
+# a fact is known — see .claude/rules/corpus-ground-truth.md. Only
+# `vendor-default` (a shipped ComfyUI workflow template) is machine-checkable;
+# the rest are honest labels, and an honest "community" beats a
+# confident-sounding sentence with no provenance.
+ALLOWED_SOURCE_KINDS = {
+    "vendor-default",
+    "vendor-doc",
+    "pack-provided",
+    "community",
+    "empirical",
+    "paper",
+}
+
+
+def resolves(corpus, token):
+    """Resolve a token the way lookup() in src/index.ts does: exact -> alias -> prefix."""
+    import re
+
+    if token in corpus.get("exact", {}):
+        return True
+    canonical = corpus.get("alias", {}).get(token)
+    if canonical and canonical in corpus.get("exact", {}):
+        return True
+    return any(re.search(entry.get("match", ""), token) for entry in corpus.get("prefix", []))
+
 
 @pytest.fixture(params=CORPUS_FILES)
 def corpus(request):
@@ -107,3 +133,112 @@ def test_pairs_with_tokens_exist_in_scheduler_corpus():
                 unknown.append(f"prefix[{i}] ({entry.get('match')}).pairs_with -> {sched!r}")
 
     assert not unknown, "pairs_with references unknown scheduler tokens: " + ", ".join(unknown)
+
+
+def test_source_kinds_are_allowed():
+    """`source.kind` must be one of the recognized provenance labels.
+
+    The point of `source` is that a script can act on it. An invented kind
+    (`"blog"`, `"docs"`) reads as provenance but is checkable by nothing — the
+    same false confidence as the prose hacks it replaces.
+    """
+    bad = []
+    for name in [*CORPUS_FILES, "models.json"]:
+        path = CORPUS_DIR / name
+        if not path.exists():
+            continue
+        with open(path) as f:
+            corpus = json.load(f)
+        for token, entry in corpus.get("exact", {}).items():
+            source = entry.get("source")
+            if source is None:
+                continue
+            kind = source.get("kind")
+            if kind not in ALLOWED_SOURCE_KINDS:
+                bad.append(f"{name}: exact[{token}].source.kind = {kind!r}")
+    assert not bad, "unrecognized source.kind values: " + ", ".join(bad)
+
+
+def test_vendor_default_sources_cite_a_template():
+    """`kind: vendor-default` is the one machine-checkable label — it must name its template.
+
+    `corpus_check.py` re-verifies every such recipe against the template as
+    ComfyUI actually ships it. A vendor-default with no `template` is a claim
+    that opts out of the only check that can falsify it.
+    """
+    missing = []
+    for name in [*CORPUS_FILES, "models.json"]:
+        path = CORPUS_DIR / name
+        if not path.exists():
+            continue
+        with open(path) as f:
+            corpus = json.load(f)
+        for token, entry in corpus.get("exact", {}).items():
+            source = entry.get("source") or {}
+            if source.get("kind") == "vendor-default" and not source.get("template"):
+                missing.append(f"{name}: exact[{token}]")
+    assert not missing, "source.kind=vendor-default without a template: " + ", ".join(missing)
+
+
+def test_model_recipes_resolve_against_sampler_and_scheduler_corpora():
+    """Every models.json recipe must name a sampler and scheduler we actually describe.
+
+    models.json is the single home for each model family's vendor-default
+    recipe (it used to be duplicated into both `euler.good_for` and
+    `simple.good_for` — two copies, no source of truth, which is how the
+    beta57 prose drifted). Same cross-corpus check as `pairs_with`: a recipe
+    naming a token the corpus cannot resolve is a dead recommendation.
+    """
+    models_path = CORPUS_DIR / "models.json"
+    if not models_path.exists():
+        pytest.skip("no models.json yet")
+    with open(models_path) as f:
+        models = json.load(f)
+    with open(CORPUS_DIR / "samplers.json") as f:
+        samplers = json.load(f)
+    with open(CORPUS_DIR / "schedulers.json") as f:
+        schedulers = json.load(f)
+
+    unknown = []
+    for token, entry in models.get("exact", {}).items():
+        recipe = entry.get("recipe") or {}
+        sampler = recipe.get("sampler")
+        scheduler = recipe.get("scheduler")
+        if sampler is not None and not resolves(samplers, sampler):
+            unknown.append(f"exact[{token}].recipe.sampler -> {sampler!r}")
+        # Schedulers have no alias/prefix sections, so `exact` is the whole set.
+        if scheduler is not None and scheduler not in schedulers.get("exact", {}):
+            unknown.append(f"exact[{token}].recipe.scheduler -> {scheduler!r}")
+    assert not unknown, "models.json recipes reference unknown tokens: " + ", ".join(unknown)
+
+
+def test_vendor_default_recipes_are_complete():
+    """A `vendor-default` recipe must be whole — it is checked against a real template.
+
+    Only vendor-defaults are held to this. A `community` or `empirical` entry is
+    allowed to leave `steps`/`cfg` null: krea2-raw ships no ComfyUI template, so
+    inventing a step count to fill the field would be exactly the fabrication
+    this schema exists to prevent. A null says "we don't know"; the label says
+    how well we know the rest.
+
+    The schedule may be named by `scheduler` (a token) OR by `scheduler_node`
+    (a model-specific node like Flux2Scheduler, where no token exists) — but one
+    of the two must be there, or the recipe names no schedule at all.
+    """
+    models_path = CORPUS_DIR / "models.json"
+    if not models_path.exists():
+        pytest.skip("no models.json yet")
+    with open(models_path) as f:
+        models = json.load(f)
+
+    problems = []
+    for token, entry in models.get("exact", {}).items():
+        recipe = entry.get("recipe") or {}
+        if not recipe.get("scheduler") and not recipe.get("scheduler_node"):
+            problems.append(f"exact[{token}].recipe names no scheduler and no scheduler_node")
+        if (entry.get("source") or {}).get("kind") != "vendor-default":
+            continue
+        for field in ("sampler", "steps", "cfg"):
+            if recipe.get(field) is None:
+                problems.append(f"exact[{token}].recipe.{field} is null on a vendor-default")
+    assert not problems, "models.json recipe problems: " + "; ".join(problems)
